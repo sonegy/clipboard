@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+</head>
+<body>
+<textarea id="box" style="width: 100%;height:50px;"></textarea>
+<button id="load">Load</button>
+<script type="text/javascript">
+    $('#box').blur(function () {
+        if (console) {
+            console.log($("#box").val());
+        }
+        $.ajax("update", {
+            type: 'post',
+            data: {
+                text: $('#box').val(),
+                date: new Date().getTime()
+            }
+        });
+    });
+    $('#load').click(function () {
+        $.ajax("current", {
+            data: {
+                date: new Date().getTime()
+            },
+            success : function (data) {
+                if (console) {
+                    console.log(data);
+                }
+                $('#box').val(data.text);
+            }
+        });
+    });
+</script>
+</body>
+</html>
