@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap 101 Template</title>
 
     <!-- Bootstrap -->
@@ -22,7 +22,7 @@
 
     <div class="starter-template">
         <h1>clipboard</h1>
-        <textarea id="box" style="font-family: monospace; width: 100%; min-height: 300px;" th:text="${currentText}"></textarea>
+        <textarea style="font-family: monospace; width: 100%; min-height: 300px;"></textarea>
         <p class="lead">
             <span id="success" class="label label-success">Success</span>
             <span id="progress" class="label label-warning">진행중</span>
@@ -38,9 +38,7 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../static/bootstrap3/js/bootstrap.min.js" th:href="@{/bootstrap3/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:inline="javascript">
-    /*<![CDATA[*/
-    $("#success").hide();
-    $("#progress").hide();
+/*<![CDATA[*/
     $('#box').blur(function () {
         if (console) {
             console.log($("#box").val());
@@ -50,16 +48,23 @@
             data: {
                 text: $('#box').val(),
                 date: new Date().getTime()
-            },
-            beforeSend: function( xhr ) {
-                $("#progress").show();
             }
-        }).always(function() {
-            $("#progress").hide();
-            $("#success").show();
         });
     });
-    /*]]>*/
+    $('#load').click(function () {
+        $.ajax("current", {
+            data: {
+                date: new Date().getTime()
+            },
+            success : function (data) {
+                if (console) {
+                    console.log(data);
+                }
+                $('#box').val(data.text);
+            }
+        });
+    });
+/*]]>*/
 </script>
 </body>
 </html>
